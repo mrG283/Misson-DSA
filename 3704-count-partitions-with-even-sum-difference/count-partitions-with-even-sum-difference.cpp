@@ -10,8 +10,9 @@ public:
         for (int i = 0; i < nums.size() - 1; i++) {
             sum1 += nums[i];
             long long right = total - sum1;
+            int res=abs(sum1-right);
 
-            if ((sum1 % 2) == (right % 2)) {
+            if (res%2==0) {
                 count++;
             }
         }
