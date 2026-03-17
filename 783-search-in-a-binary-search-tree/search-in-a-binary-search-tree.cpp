@@ -21,10 +21,9 @@ public:
         else if(root->val>val){
             return searchBST(root->left,val);
         }
-        else{
-            return searchBST(root->right,val);
-        }
-        return root;
+        
+        return searchBST(root->right,val);
+        
         
     }
 };
