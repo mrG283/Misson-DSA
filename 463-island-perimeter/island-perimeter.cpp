@@ -1,24 +1,46 @@
 class Solution {
 public:
-    int islandPerimeter(vector<vector<int>>& grid) {
+    int dfs(vector<vector<int>>& grid, int i, int j, vector<vector<bool>>& vis) {
+        int n = grid.size();
+        int m = grid[0].size();
+        
+
+        if (i < 0 || j < 0 || i >= n || j >= m) return 1;
+        
+       
+        if (grid[i][j] == 0) return 1;
+        
+ 
+        if (vis[i][j]) return 0;
+        
+        vis[i][j] = true;
+        
         int perimeter = 0;
-        int rows = grid.size();
-        int cols = grid[0].size();
+        
+      
+        perimeter += dfs(grid, i + 1, j, vis);
+        perimeter += dfs(grid, i - 1, j, vis);
+        perimeter += dfs(grid, i, j + 1, vis);
+        perimeter += dfs(grid, i, j - 1, vis);
+        
+        return perimeter;
+    }
 
-        for(int i = 0; i < rows; i++){
-            for(int j = 0; j < cols; j++){
-                if(grid[i][j] == 1){
-                    perimeter += 4;
-
-                    if(i > 0 && grid[i-1][j] == 1)
-                        perimeter -= 2;
-
-                    if(j > 0 && grid[i][j-1] == 1)
-                        perimeter -= 2;
+    int islandPerimeter(vector<vector<int>>& grid) {
+        int n = grid.size();
+        int m = grid[0].size();
+        
+        vector<vector<bool>> vis(n, vector<bool>(m, false));
+        
+       
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                if (grid[i][j] == 1) {
+                    return dfs(grid, i, j, vis);
                 }
             }
         }
-
-        return perimeter;
+        
+        return 0;
     }
 };
