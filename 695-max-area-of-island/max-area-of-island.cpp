@@ -24,12 +24,10 @@ public:
         
         for(int i=0;i<m;i++){
             for(int j=0;j<n;j++){
-                if(grid[i][j]==1 && visited[i][j]==0){
+                if(grid[i][j]==1){
                     backtrack(grid,visited,count,i,j,m,n);
                     
                     maximum=max(maximum,count);
-                    
-                   
                     count=0;
                 }
             }
