@@ -6,22 +6,19 @@ public:
         stack<int>st;
 
         for(int i=0;i<=heights.size();i++){
-            while(!st.empty()&&(i==n||heights[st.top()]>heights[i])){
-                int height=heights[st.top()];
-                st.pop();
-                int width=0;
-                
-                if(st.empty()){
-                    width=i;
-
-                }
-                else{
-                    width=i-st.top()-1;
-                }
-                maxarea=max(maxarea,width*height);
+           while(!st.empty() && (i==n || heights[st.top()]>=heights[i])){
+            int h=st.top();
+            st.pop();
+            int width;
+            if(st.empty()){
+                width=i;
             }
-            st.push(i);
-            
+            else{
+                width=i-st.top()-1;
+            }
+            maxarea=max(maxarea,heights[h]*width);
+           }
+           st.push(i);
         }
         return maxarea;
         
