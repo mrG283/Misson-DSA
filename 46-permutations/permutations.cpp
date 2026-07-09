@@ -6,15 +6,13 @@ public:
             return;
         }
         for(int i=0;i<nums.size();i++){
-            if(used[i])continue;
+            if(used[i]) continue;
             used[i]=true;
             path.push_back(nums[i]);
             backtrack(nums,result,path,used);
             path.pop_back();
             used[i]=false;
         }
-
-      
         
     }
     vector<vector<int>> permute(vector<int>& nums) {
@@ -23,6 +21,6 @@ public:
         vector<bool>used(nums.size(),false);
         backtrack(nums,result,path,used);
         return result;
-        
+
     }
 };
