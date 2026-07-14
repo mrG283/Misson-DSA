@@ -6,7 +6,7 @@ public:
             res.push_back(curr);
             return;
         }
-        if(curr.size()>k || n<0){
+        if(n<0 || curr.size()==k){
             return;
         }
         for(int i=start;i<=9;i++){
@@ -14,12 +14,13 @@ public:
             backtrack(i+1,curr,k,n-i);
             curr.pop_back();
         }
+       
     }
-
     vector<vector<int>> combinationSum3(int k, int n) {
         vector<int>curr;
         backtrack(1,curr,k,n);
         return res;
+
 
         
     }
