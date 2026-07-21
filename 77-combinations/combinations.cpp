@@ -1,20 +1,21 @@
 class Solution {
 public:
-    void backtrack(vector<vector<int>>&result,vector<int>&path,int start,int k,int n){
+    void combination(int n,int k,vector<vector<int>>&result,vector<int>&path,int index){
         if(path.size()==k){
             result.push_back(path);
             return;
         }
-        for(int i=start;i<=n;i++){
+        for(int i=index;i<=n;i++){
             path.push_back(i);
-            backtrack(result,path,i+1,k,n);
+            combination(n,k,result,path,i+1);
             path.pop_back();
         }
     }
     vector<vector<int>> combine(int n, int k) {
         vector<vector<int>>result;
         vector<int>path;
-        backtrack(result,path,1,k,n);
+
+        combination(n,k,result,path,1);
         return result;
         
     }
