@@ -1,19 +1,17 @@
 class Solution {
 public:
-    bool isValid(string s) {
-        stack<char> stack;
-        unordered_map<char, char> mapping = {{')', '('}, {']', '['}, {'}', '{'}};
+    bool isValid(string& str) {
+        if (str.size() % 2)
+            return 0;
 
-        for (char c : s) {
-            if (mapping.find(c) == mapping.end()) {
-                stack.push(c);
-            } else if (!stack.empty() && mapping[c] == stack.top()) {
-                stack.pop();
-            } else {
-                return false;
-            }
-        }
+        int j = 0;
 
-        return stack.empty();        
+        for (char s : str)
+            if ((s & 3) != 1)
+                str[j++] = s;
+            else if (j == 0 || ((s - str[--j] + 1) >> 1) != 1)
+                return 0;
+
+        return j == 0;
     }
 };
