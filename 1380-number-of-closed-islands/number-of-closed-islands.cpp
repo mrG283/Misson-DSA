@@ -1,50 +1,20 @@
 class Solution {
-public:
+    int m, n;
 
-    bool dfs(vector<vector<int>> &grid, vector<vector<int>> &visited, int i, int j, int n, int m){
-        bool closed = true;
-        visited[i][j] = 1;
-        if (i==0){
-            closed = false;
-        }
-        else{
-            if (grid[i-1][j]==0 && !visited[i-1][j]) closed = dfs(grid,visited,i-1,j,n,m) && closed;
-        }
-        if (j==0){
-            closed = false;
-        }
-        else{
-            if (grid[i][j-1]==0 && !visited[i][j-1])closed = dfs(grid,visited,i,j-1,n,m) && closed;
-        }
-        if (i==(n-1)){
-            closed = false;
-        }
-        else{
-            if (grid[i+1][j]==0 && !visited[i+1][j])closed = dfs(grid,visited,i+1,j,n,m) && closed;
-        }
-        if (j==(m-1)){
-            closed = false;
-        }
-        else{
-            if (grid[i][j+1]==0 && !visited[i][j+1])closed = dfs(grid,visited,i,j+1,n,m) && closed;
-        }
-        return closed;
+    bool closed(vector<vector<int>>& grid, int i, int j) {  // flood the island through (i, j); true if it never reaches the border
+        if (i < 0 || i >= m || j < 0 || j >= n) return false;  // stepped off the grid: the island touches the border
+        if (grid[i][j]) return true;  // water, or land we already flooded
+        grid[i][j] = 1;  // visited: turn it into water
+        return closed(grid, i + 1, j) & closed(grid, i - 1, j) & closed(grid, i, j + 1) & closed(grid, i, j - 1);  // & (not &&) floods all 4 sides
     }
 
+public:
     int closedIsland(vector<vector<int>>& grid) {
-        int n = grid.size();
-        int m = grid[0].size();
-        vector<vector<int>> visited(n, vector<int> (m,0));
-        int ans = 0;
-        for (int i = 0; i<n; i++){
-            for (int j = 0; j<m ; j++){
-                if (grid[i][j] == 0 && !visited[i][j]){
-                    if (dfs(grid,visited,i,j,n,m)){
-                        ans++; 
-                    }
-                }
-            }
-        }
-        return ans;
+        m = grid.size(), n = grid[0].size();
+        int count = 0;
+        for (int i = 0; i < m; i++)
+            for (int j = 0; j < n; j++)
+                if (!grid[i][j]) count += closed(grid, i, j);
+        return count;
     }
 };
